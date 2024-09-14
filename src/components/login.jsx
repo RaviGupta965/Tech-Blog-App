@@ -1,11 +1,11 @@
 import React,{useState} from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import {login as authlogin} from '../store/authslice.js'
-import {Button,Input,Select,Logo} from './index.js'
+import {Button,Input,Logo} from './index.js'
 import authService from '../appwrite/auth.js'
 import {useForm} from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-
+console.log('login page');
 function Login() {
     const navigate=useNavigate();
     const dispatch=useDispatch();
@@ -22,9 +22,6 @@ function Login() {
                     dispatch(authlogin(userdata));
                     navigate("/");
                 }
-            }
-            else{
-
             }
         }catch(error){
             seterror(error.message)
@@ -59,7 +56,7 @@ function Login() {
                 {...register("email",{
                     required:true,
                     validate:{
-                        matchPattern:(value)=> /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "Email must be valid address" 
+                        matchPattern:(value)=> /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || "Email must be valid address" 
                     }
                 })}
                 />

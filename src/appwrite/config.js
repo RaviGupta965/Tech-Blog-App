@@ -80,11 +80,12 @@ export class Service{
             ) 
         }
         catch(err){
-            console.log(console.log('Appwrite service :: getPosts :: error',err))
+            console.log('Appwrite service :: getPosts :: error',err)
             return false;
         }
     }
 
+    // upload files
     async uploadFile(file){
         try{
             return await this.bucket.createFile(
@@ -102,7 +103,7 @@ export class Service{
 
     async deleteFile(fileId){
         try{
-            return await this.bucket.createFile(
+            await this.bucket.createFile(
                 config.appwriteBucketId,
                 fileId
             ) 

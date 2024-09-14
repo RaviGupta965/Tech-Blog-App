@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React,{ useEffect, useState } from 'react'
 import {useDispatch} from 'react-redux'
 import './App.css'
 import authService from './appwrite/auth.js'
@@ -13,15 +13,15 @@ function App() {
 
   useEffect(()=>{
     authService.getCurrentUser()
-    .then((username)=>{
-      if(username){
-        dispatch(login({username}));
+    .then((userData)=>{
+      if(userData){
+        dispatch(login({userData}));
       }
       else{
-        dispatch(login({username}));
+        dispatch(logout({userData}));
       }
     })
-    .finally(setloading(false));
+    .finally(setloading(false))
   },[])
   
   return !loading ? (
@@ -29,7 +29,7 @@ function App() {
       <div className="w-full block">
         <Header/>
         <main>
-          <Outlet/>
+          TODO: <Outlet/>
         </main>
         <Footer/>
       </div>
