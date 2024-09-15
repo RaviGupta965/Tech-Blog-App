@@ -12,14 +12,14 @@ export class Service{
         this.bucket=new Storage(this.client);
     }
 
-    async createPost({title,slug,content,featuredimage,status,userId}){
+    async createPost({title,slug,content,featuredimage,status,userid}){
         try{
             return await this.databases.createDocument(config.appwriteDatabaseId,config.appwriteColectionId,slug,{
-                title,content,featuredimage,status,userId
+                title,content,featuredimage,status,userid
             })
         }
         catch(err){
-            console.log('Appwrite service :: Service :: error',err)
+            console.log('Appwrite service :: CreatePost :: error',err)
         }
     }
 
@@ -87,16 +87,15 @@ export class Service{
 
     // upload files
     async uploadFile(file){
-        try{
+        try {
             return await this.bucket.createFile(
                 config.appwriteBucketId,
                 ID.unique(),
                 file
-            ) 
-        }
-        catch(err){
-            console.log(console.log('Appwrite service :: uploadFiles :: error',err))
-            return false;
+            )
+        } catch (error) {
+            console.log("Appwrite serive :: uploadFile :: error", error);
+            return false
         }
     }
 

@@ -21,17 +21,16 @@ export class AuthService {
                 return this.login({email,password});
             }
             else{
-                return userAccount
+                return userAccount;
             }
         } catch (error) {
             console.log('Appwrite service :: createAccount :: error',error);
             throw(error);
         }
     }
-
     async login({email,password}){
         try {
-            return await this.account.createSession(email, password);
+            return await this.account.createEmailPasswordSession(email, password);
         } catch (error) {
             console.log('Appwrite service :: login :: error',error);
             throw(error);

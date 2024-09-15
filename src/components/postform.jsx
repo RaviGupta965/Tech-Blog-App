@@ -23,7 +23,7 @@ const submit=async (data) =>{
     const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
     if(file){
-      appwriteService.deleteFile(post.featuredImage);
+      appwriteService.deleteFile(post.featuredimage);
     }
 
     const dbPost = await appwriteService.updatePost(post.$id,{
@@ -38,11 +38,12 @@ const submit=async (data) =>{
       const file = await appwriteService.uploadFile(data.image[0]);
       if(file){
         const fileId=file.$id;
-        data.featuredImage=fileId;
+        data.featuredimage=fileId;
         const dbPost=await appwriteService.createPost({
           ...data,
-          userId: userData.$id,
+          userid: userData.$id,
         });
+        console.log("success");
 
         if(dbPost){
           navigate(`/post/${dbPost.$id}`);
@@ -72,6 +73,7 @@ const submit=async (data) =>{
 
     return subscription.unsubscribe();
   },[watch,slugtransform,setValue]);
+  
   return (
     <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
             <div className="w-2/3 px-2">
@@ -87,7 +89,7 @@ const submit=async (data) =>{
                     className="mb-4"
                     {...register("slug", { required: true })}
                     onInput={(e) => {
-                        setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
+                        setValue("slug", slugtransform(e.currentTarget.value), { shouldValidate: true });
                     }}
                 />
                 <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
@@ -103,7 +105,7 @@ const submit=async (data) =>{
                 {post && (
                     <div className="w-full mb-4">
                         <img
-                            src={appwriteService.getFilePreview(post.featuredImage)}
+                            src={appwriteService.getfilePreview(post.featuredimage)}
                             alt={post.title}
                             className="rounded-lg"
                         />
@@ -115,7 +117,7 @@ const submit=async (data) =>{
                     className="mb-4"
                     {...register("status", { required: true })}
                 />
-                <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
+                <Button type="submit" bgcolor={post ? "bg-green-500" : undefined} className="w-full">
                     {post ? "Update" : "Submit"}
                 </Button>
             </div>
